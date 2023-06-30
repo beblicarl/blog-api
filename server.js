@@ -10,12 +10,21 @@ const authRoute = require("./routes/Auth");
 const blogRoute = require("./routes/Blog");
 
 dotenv.config();
+const uri = process.env.DB_KEY;
 
 //connection to database
 mongoose
-  .connect(process.env.DB_KEY)
-  .then(console.log("CONNECTED TO DATABSE"))
-  .catch((err) => console.log(err));
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB");
+    // Your code after successfully connecting to the database
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 //Middleware
 app.use(express.json());
