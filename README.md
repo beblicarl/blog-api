@@ -17,9 +17,9 @@
 
 #### API USAGE
 
-      -API  : https://web-production-dcc2.up.railway.app/
-      -API HEALTH : https://web-production-dcc2.up.railway.app/health
-      -SWAGGER LINK : https://web-production-dcc2.up.railway.app/docs/
+      -API  : https://blog-api-9f89.onrender.com/
+      -API HEALTH :https://blog-api-9f89.onrender.com/api/v1/health
+      -API DOCS : https://blog-api-9f89.onrender.com/docs
 
 ##### ASSESSMENT QUESTION
 
