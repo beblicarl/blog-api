@@ -1,0 +1,405 @@
+openapi: 3.0.0
+info:
+  title: BLOG API
+  description: An API for blogging.
+  version: 1.0.0
+servers:
+  - url: https://blog-api-9f89.onrender.com/docs/
+    description: Main (production) server
+  - url: http://localhost:5000/api/v1
+    description: Internal development server for local testing
+tags:
+  - name: user
+    description: Operations about users
+  - name: blog
+    description: Access to blogs
+paths:
+  /register:
+    post:
+      tags:
+        - user
+      operationId: createUser
+      summary: Create new user
+      description: Create a new user
+      requestBody:
+        description: Create a new user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: user name
+                  example: Jones Asare
+                email:
+                  type: string
+                  description: user email
+                  format: email
+                  example: jones@gmail.com
+                password:
+                  type: string
+                  description: user password
+                  example: Modestrighteous1$
+      responses:
+        "201":
+          description: A successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success
+                    example: success
+                  data:
+                    type: object
+                    description: data
+                    properties:
+                      _id:
+                        type: integer
+                        description: user id
+                        example: 10
+                      username:
+                        type: string
+                        description: user name
+                        example: Jones Asare
+                      email:
+                        type: string
+                        description: user email
+                        format: email
+                        example: jones@gmail.com
+                      password:
+                        type: string
+                        description: user password
+                        example: Modestrighteous1$
+                      createdAt:
+                        type: string
+                        description: time a user was created
+                        example: "2022-10-06T12:50:11.970Z"
+      security:
+        - bearerAuth: []
+  /login:
+    post:
+      tags:
+        - user
+      operationId: signinUser
+      summary: Signin a user
+      description: Signin a user
+      requestBody:
+        description: Signin a user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: integer
+                  description: user id
+                  example: 10
+                username:
+                  type: string
+                  description: user name
+                  example: Jones Asare
+                email:
+                  type: string
+                  description: user email
+                  format: email
+                  example: jones@gmail.com
+                createdAt:
+                  type: string
+                  description: time a user was created
+                  example: "2022-10-06T12:50:11.970Z"
+                updatedAt:
+                  type: string
+                  description: time a user was updated
+                  example: "2022-10-06T12:50:11.970Z"
+
+      responses:
+        "200":
+          description: A successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success
+                    example: success
+                  data:
+                    type: object
+                    description: data
+                    properties:
+                      message:
+                        type: string
+                        description: login message
+                        example: Welcome Kojo
+                      token:
+                        type: string
+                        description: user token
+                        example: SkjsdnskdKJSKJakj(32423422sfdsjkdjLdsdsdskhG3sd0934djkhxz
+      security:
+        - bearerAuth: []
+
+  /blog:
+    post:
+      tags:
+        - blog
+      operationId: create a blog
+      summary: Create a blog
+      description: Create a blog
+      requestBody:
+        description: Create a blog
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: title of blog
+                  example: Jones Asare
+                post:
+                  type: string
+                  description: body of the blog
+                  example: my first blog
+      responses:
+        "201":
+          description: A successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success
+                    example: success
+                  data:
+                    type: object
+                    description: data
+                    properties:
+                      id:
+                        type: integer
+                        description: blog id
+                        example: 10
+                      title:
+                        type: string
+                        description: title of blog
+                        example: Jones Asare
+                      post:
+                        type: string
+                        description: body of the blog
+                        example: my first blog
+                      createdAt:
+                        type: string
+                        description: time the blog was created
+                        example: 8th-November-2022
+                      updatedAt:
+                        type: string
+                        description: time the blog was updated
+                        example: 8th-November-2022
+
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - blog
+      operationId: get all blogs
+      summary: Get all blogs
+      description: Get all blogs
+      responses:
+        "201":
+          description: A successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          description: blog id
+                          example: 10
+                        title:
+                          type: string
+                          description: title of blog
+                          example: Jones Asare
+                        post:
+                          type: string
+                          description: body of the blog
+                          example: my first blog
+                        createdAt:
+                          type: string
+                          description: time the blog was created
+                          example: 8th-November-2022
+                        updatedAt:
+                          type: string
+                          description: time the blog was updated
+                          example: 8th-November-2022
+      security:
+        - bearerAuth: []
+
+  /blog/:{blogId}:
+    patch:
+      tags:
+        - blog
+      operationId: update a blog
+      summary: Update a blog
+      description: Update a blog
+      parameters:
+        - in: path
+          name: profileId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of a blog to get
+      requestBody:
+        description: Update a blog
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: title of blog
+                  example: Jones Asare
+                post:
+                  type: string
+                  description: body of the blog
+                  example: my first blog
+
+      responses:
+        "201":
+          description: A successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success
+                    example: success
+                  data:
+                    type: object
+                    description: data
+                    properties:
+                      id:
+                        type: integer
+                        description: blog id
+                        example: 10
+                      title:
+                        type: string
+                        description: title of blog
+                        example: Jones Asare
+                      post:
+                        type: string
+                        description: body of the blog
+                        example: my first blog
+                      createdAt:
+                        type: string
+                        description: time the blog was created
+                        example: 8th-November-2022
+                      updatedAt:
+                        type: string
+                        description: time the blog was updated
+                        example: 8th-November-2022
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - blog
+      operationId: delete a blog
+      summary: Delete a blog
+      description: Delete a blog
+      parameters:
+        - in: path
+          name: blogId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the blog to get
+      responses:
+        "200":
+          description: A successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success
+                    example: success
+                  data:
+                    type: object
+                    description: data
+                    properties:
+                      message:
+                        type: string
+                        description: responses
+                        example: the post is deleted
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - blog
+      operationId: get a blog
+      summary: get a blog
+      description: get a blog
+      parameters:
+        - in: path
+          name: blogId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the blog to get
+      responses:
+        "200":
+          description: A successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: success
+                    example: success
+                  data:
+                    type: object
+                    description: data
+                    properties:
+                      id:
+                        type: integer
+                        description: blog id
+                        example: 10
+                      title:
+                        type: string
+                        description: title of blog
+                        example: Jones Asare
+                      post:
+                        type: string
+                        description: body of the blog
+                        example: my first blog
+                      createdAt:
+                        type: string
+                        description: time the blog was created
+                        example: 8th-November-2022
+                      updatedAt:
+                        type: string
+                        description: time the blog was updated
+                        example: 8th-November-2022
+      security:
+        - bearerAuth: []
