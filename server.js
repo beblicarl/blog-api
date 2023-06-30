@@ -1,10 +1,18 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const swaggerUI = require("swagger-ui-express");
+const fs = require("fs");
+const YAML = require("yaml");
 
 const path = require("path");
+
+//api docs
+const file = fs.readFileSync("./docs/swagger.yaml", "utf8");
+const swaggerDocument = YAML.parse(file);
 const app = express();
 
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 //routes
 const authRoute = require("./routes/Auth");
 const blogRoute = require("./routes/Blog");
